@@ -15,13 +15,13 @@ $xApp = $session->get('xApp');
                     <?php if($dados['tipo'] == 1): ?>
                         <li class="nav-item">
                             <a id="1" href="/inicio/admin" class="nav-link">
-                                <i class="nav-icon fas fa-home"></i>
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>Inicio</p>
                             </a>
                         </li>
 
                         <li class="nav-header" data-toggle="collapse" data-target="#menuControleAdmin" style="cursor:pointer;">
-                            <span>CONTROLE</span>
+                            <span>            <i class="nav-icon fas fa-columns" style="margin-right: 3px;"></i>CONTROLE</span>
                             <i class="right fas fa-angle-right" id="iconControleAdmin"></i>
                         </li>
                         <ul id="menuControleAdmin" class="nav nav-treeview" style="display:none;">
@@ -103,7 +103,7 @@ $xApp = $session->get('xApp');
                         </li>
 
                         <li class="nav-header" data-toggle="collapse" data-target="#menuEmitirNotas" style="cursor:pointer;">
-                            <span>EMITIR NOTAS</span>
+                            <span><i class="nav-icon fas fa-copy" style="margin-right: 3px;"></i>EMITIR NOTAS</span>
                             <i class="right fas fa-angle-right" id="iconEmitirNotas"></i>
                         </li>
                         <ul id="menuEmitirNotas" class="nav nav-treeview" style="display:none;">
@@ -128,7 +128,7 @@ $xApp = $session->get('xApp');
                         </ul>
 
                         <li class="nav-header" data-toggle="collapse" data-target="#menuControleGeral" style="cursor:pointer;">
-                            <span>CONTROLE GERAL</span>
+                            <span><i class="nav-icon fas fa-columns" style="margin-right: 3px;"></i>CONTROLE GERAL</span>
                             <i class="right fas fa-angle-right" id="iconControleGeral"></i>
                         </li>
                         <ul id="menuControleGeral" class="nav nav-treeview" style="display:none;">
@@ -159,7 +159,7 @@ $xApp = $session->get('xApp');
                         </ul>
 
                         <li class="nav-header" data-toggle="collapse" data-target="#menuControleFiscal" style="cursor:pointer;">
-                            <span>CONTROLE FISCAL</span>
+                            <span><i class="nav-icon fas fa-copy" style="margin-right: 3px;"></i>CONTROLE FISCAL</span>
                             <i class="right fas fa-angle-right" id="iconControleFiscal"></i>
                         </li>
                         <ul id="menuControleFiscal" class="nav nav-treeview" style="display:none;">
