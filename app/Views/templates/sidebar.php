@@ -48,7 +48,7 @@ $xApp = $session->get('xApp');
                     <?php elseif($dados['tipo'] == 2): ?>
                         <li class="nav-item">
                             <a id="1" href="/inicio/contador" class="nav-link">
-                                <i class="nav-icon fas fa-home"></i>
+                                <i class="nav-icon fas fa-tachometer-alt">
                                 <p>Inicio</p>
                             </a>
                         </li>
@@ -97,7 +97,7 @@ $xApp = $session->get('xApp');
                     <?php elseif($dados['tipo'] == 3): ?>
                         <li class="nav-item">
                             <a id="1" href="/inicio/emissor" class="nav-link">
-                                <i class="nav-icon fas fa-home"></i>
+                                <i class="nav-icon fas fa-tachometer-alt">
                                 <p>Inicio</p>
                             </a>
                         </li>
