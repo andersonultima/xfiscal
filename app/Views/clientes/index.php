@@ -62,6 +62,56 @@
 </div>
 <!-- /.modal -->
 
+<!-- Modal SELECIONA CSV -->
+<div class="modal fade" id="modal-add-por-csv">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Selecione o CSV</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form-import-csv" action="/clientes/addPorCSV" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="exampleInputFile">Selecione o CSV</label>
+                                <div class="input-group">
+                                    <input type="file" name="csv" required="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <p>
+                                <b style="color: orange;">Atenção:</b> <br>
+                                1).. Não remova a primeira linha (CABEÇALHO). <br>
+                                2).. Caso o campo seja NUMERICO não deixe em vazio. <br>
+                                3).. Usei o padrão de moeda BRL e para valores quebrados use VIRGULA. <br>
+                                4).. Não coloque mascara nos campos. <br>
+                                5).. Baixe a planilha CSV exemplo e preencha seus respectivos campos. <br>
+                            </p>
+                            <p style="text-align: center;">
+                                <a href="<?= base_url('assets/files/modelo_clientes(in).csv') ?>" class="btn btn-info"><i class="fas fa-download"></i> Baixar planilha modelo</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success" id="btn-continuar-import-csv" onclick="importarCSV()"><i class="fas fa-save"></i> Continuar</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Main content -->
@@ -92,6 +142,8 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <a href="/clientes/create" class="btn btn-info"><i class="fas fa-plus-circle"></i> Novo Cliente</a>
+                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-add-por-csv"><i class="fas fa-plus-circle"></i> Adcionar clientes por CSV</button>
+
                                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#pesquisar">Pesquisar</button>
                                     <?php if(isset($id_cliente) || isset($nome) || isset($razao_social) || isset($cpf) || isset($cnpj)): ?>
                                         <a href="/clientes" class="btn btn-default">Desfazer</a>
@@ -232,5 +284,12 @@
         {
             document.getElementById('formulario-de-pesquisa').submit();
         }
+    }
+</script>
+<script>
+    function importarCSV() {
+        document.getElementById("btn-continuar-import-csv").innerHTML = "Aguarde..";
+        document.getElementById("btn-continuar-import-csv").disabled = true;
+        document.getElementById("form-import-csv").submit();
     }
 </script>

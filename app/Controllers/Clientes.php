@@ -24,6 +24,7 @@ class Clientes extends Controller
 
     function __construct()
     {
+    
         $this->helpers = ['app'];
 
         $this->session = session();
@@ -338,6 +339,72 @@ class Clientes extends Controller
 
         return redirect()->to('/clientes');
     }
+    public function addPorCSV()
+    {
+        // Obtém o arquivo carregado
+        $file = $this->request->getFile('csv');
+        
+        // Verifica se o arquivo é válido e possui a extensão correta
+        if ($file->isValid() && $file->getClientExtension() == 'csv')
+        {
+            // Lê o conteúdo do CSV e converte para UTF-8
+            $str = file_get_contents($file->getTempName());
+            $str = mb_convert_encoding($str, 'UTF-8', 'auto'); // Ajuste o encoding, se necessário
+    
+            // Divide o conteúdo do CSV em linhas
+            $linhas = explode("\n", $str);
+            array_shift($linhas); // Remove a primeira linha (cabeçalho)
+            // Itera por cada linha do CSV
+            foreach($linhas as $linha)
+            {
+                if(!empty($linha)){
+                    $linha = preg_replace('/""/', '"', $linha);
+           
+                    $colunas = explode(",",$linha);
+                    $colunas[0] = str_replace('"', '',$colunas[0]);
+                    $colunas[1] = str_replace('"', '',$colunas[1]);
+                    $colunas[10] = str_replace('"', '',$colunas[10]);
+                    $colunas[14] = str_replace('"', '',$colunas[14]);
+                    // Prepara os dados para inserção no banco de dados
+                    $dados = [
+                        'tipo' => $colunas[0],
+                        'nome' => $colunas[1],
+                        'cpf' => $colunas[2] ?: ' ',  // Considera `null` para valores vazios
+                        'cnpj' => $colunas[3] ?: '000000',
+                        'razao_social' => $colunas[4] ?:  ' ',
+                        'isento' => $colunas[5] == "1" ? 1 : 0,
+                        'ie' => $colunas[6] ?:  ' ',
+                        'logradouro' => $colunas[7],
+                        'numero' => $colunas[8],
+                        'complemento' => $colunas[9] ?:  ' ',
+                        'bairro' => $colunas[10],
+                        'cep' => $colunas[11],
+                        'fone' => $colunas[12],
+                        'id_uf' => $colunas[13],
+                        'id_municipio' => $colunas[14],
+                        'id_contador' => $this->id_contador, // Supondo que você já tenha esse valor no contexto
+                        'id_empresa' => $this->id_empresa,
+                        'created_at' => date('Y-m-d H:i:s'), // Data e hora atuais
+                        'updated_at' => date('Y-m-d H:i:s'),   // Supondo que você já tenha esse valor no contexto
+                    ];
+        
+                    // Insere no banco de dados usando o modelo
+                    $this->cliente_model->insert($dados);
+                }
+            }
+    
+            // Define uma mensagem de sucesso e redireciona
+            $this->session->setFlashdata('alert', ['type' => 'success', 'title' => "Clientes importados com sucesso!"]);
+            return redirect()->to('/clientes');
+        }
+        else
+        {
+            // Mensagem de erro se o CSV for inválido
+            $this->session->setFlashdata('alert', ['type' => 'danger', 'title' => "Csv inválido"]);
+        }
+    }
+    
+    
 
     public function delete($id_cliente)
     {
